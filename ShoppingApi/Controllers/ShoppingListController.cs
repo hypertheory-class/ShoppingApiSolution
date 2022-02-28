@@ -16,6 +16,7 @@ public class ShoppingListController : ControllerBase
     [HttpGet("shopping-list")]
     public async Task<ActionResult> GetShoppingList()
     {
+        await Task.Delay(3000);
         var response = await _context.Items!
             .Where(i=> i.Removed == false)
             .Select(i => new ShoppingListItem(i.Id.ToString(), i.Description, i.Purchased))
