@@ -11,6 +11,40 @@ public class ShoppingListController : ControllerBase
         _context = context;
     }
 
+    // POST purchased-shopping-items
+    [HttpPost("purchased-shopping-items")]
+    public async Task<ActionResult> MarkItemPurchased([FromBody] ShoppingListItem request)
+    {
+        await Task.Delay(2000);
+        // 1. Does it exist? If so, do something, if not, return a bad request
+        if (int.TryParse(request.id, out int id))
+        {
+            // Fake business rule ahead:
+            if(id == 1)
+            {
+                return BadRequest("You must keep that on your list");
+            }
+            var savedItem = await _context.Items!.Where(i => i.Id == id).SingleOrDefaultAsync();
+            if (savedItem == null)
+            {
+                return BadRequest("No matching item"); // 400
+            }
+            else
+            {
+                // 2. If it does.
+                //    - Change the purchased property to true.
+                savedItem.Purchased = true;
+                //    - Save it.
+                await _context.SaveChangesAsync();
+                ///   - return Accepted.
+                return Accepted();
+            }
+        } else
+        {
+            return BadRequest("Must have an ID");
+        }
+    }
+
 
     // GET /shopping-list
     [HttpGet("shopping-list")]
