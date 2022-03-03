@@ -7,10 +7,12 @@ namespace ShoppingApi.Controllers;
 public class StatusController : ControllerBase
 {
     private readonly IProvideStatusInformation _statusService;
+    private readonly ISystemTime _systemTime;
 
-    public StatusController(IProvideStatusInformation statusService)
+    public StatusController(IProvideStatusInformation statusService, ISystemTime systemTime)
     {
         _statusService = statusService;
+        _systemTime = systemTime;
     }
 
     [HttpGet("status")]

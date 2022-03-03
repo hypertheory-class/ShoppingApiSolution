@@ -1,5 +1,6 @@
 global using Microsoft.EntityFrameworkCore;
 global using ShoppingApi.Data;
+using ShoppingApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var globalSystemTime = new SystemTime();
+// configure that thing...
+
+//builder.Services.AddScoped<ISystemTime, SystemTime>();
+builder.Services.AddSingleton<ISystemTime>(globalSystemTime);
+//builder.Services.AddSingleton<ISystemTime, SystemTime>();
+builder.Services.AddTransient<IProvideStatusInformation, LocalStatusProvider>();
 
 builder.Services.AddDbContext<ShoppingDataContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("shopping"));
