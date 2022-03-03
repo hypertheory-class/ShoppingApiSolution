@@ -15,6 +15,7 @@ public class ShoppingListController : ControllerBase
     [HttpPost("purchased-shopping-items")]
     public async Task<ActionResult> MarkItemPurchased([FromBody] ShoppingListItem request)
     {
+        
         await Task.Delay(2000);
         // 1. Does it exist? If so, do something, if not, return a bad request
         if (int.TryParse(request.id, out int id))
