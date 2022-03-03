@@ -23,7 +23,7 @@ var globalSystemTime = new SystemTime();
 //builder.Services.AddScoped<ISystemTime, SystemTime>();
 builder.Services.AddSingleton<ISystemTime>(globalSystemTime);
 //builder.Services.AddSingleton<ISystemTime, SystemTime>();
-builder.Services.AddTransient<IProvideStatusInformation, LocalStatusProvider>();
+builder.Services.AddTransient<IProvideStatusInformation, RemoteStatusProvider>();
 
 builder.Services.AddDbContext<ShoppingDataContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("shopping"));
