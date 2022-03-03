@@ -11,6 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddHttpClient<OnCallDeveloperHttpService>(config =>
+{
+    config.BaseAddress = new Uri(builder.Configuration.GetValue<string>("onCallDeveloperUri"));
+});
+
 var globalSystemTime = new SystemTime();
 // configure that thing...
 
