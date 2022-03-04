@@ -1,4 +1,5 @@
-﻿using ShoppingApi.Models;
+﻿using Polly.CircuitBreaker;
+using ShoppingApi.Models;
 
 namespace ShoppingApi.Services;
 
@@ -24,7 +25,8 @@ public class RemoteStatusProvider : IProvideStatusInformation
 
             developer = new OnCallDeveloperInfo($"{onCallDeveloperInfo.firstName} {onCallDeveloperInfo.lastName}", onCallDeveloperInfo.telephoneNumber, onCallDeveloperInfo.emailAddress);
         }
-        catch (HttpRequestException)
+       
+        catch (Exception)
         {
             developer = new OnCallDeveloperInfo("Unavailable, Call Luke.", "luke@aol.com", "800 555-1212");
 

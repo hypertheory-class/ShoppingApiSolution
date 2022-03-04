@@ -1,5 +1,6 @@
 global using Microsoft.EntityFrameworkCore;
 global using ShoppingApi.Data;
+using ShoppingApi;
 using ShoppingApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient<OnCallDeveloperHttpService>(config =>
 {
     config.BaseAddress = new Uri(builder.Configuration.GetValue<string>("onCallDeveloperUri"));
-});
+})
+    .AddPolicyHandler(HttpPolicies.GetRetyPolicy())
+    .AddPolicyHandler(HttpPolicies.GetCircuitBreaker());
 
 var globalSystemTime = new SystemTime();
 // configure that thing...
