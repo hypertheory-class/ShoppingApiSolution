@@ -32,15 +32,8 @@ builder.Services.AddDbContext<ShoppingDataContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("shopping"));
 });
 
-builder.Services.AddCors(pol =>
-{
-    pol.AddDefaultPolicy(p =>
-    {
-        p.AllowAnyOrigin();
-        p.AllowAnyMethod();
-        p.AllowAnyHeader();
-    });
-});
+
+// TODO: Talk about this again when we create our ingress later. I don't like this code being here and it isn't going to be needed 
 
 var app = builder.Build();
 
@@ -51,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
+//app.UseCors(); // When Jeff does BS stuff in class, it's an indication that it is MORE important than he is letting on.
 app.UseAuthorization();
 
 app.MapControllers();
